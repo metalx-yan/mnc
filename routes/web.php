@@ -10,53 +10,44 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::resource('article', 'ArticleController');
 
+Route::get('curl/listuser', 'CurlController@sendRequestListUser');
+Route::get('curl/detailuser', 'CurlController@sendRequestDetailUser');
+Route::get('login/user', 'LoginUserController@index')->name('login.user');
+Route::get('home', 'LoginUserController@home')->name('home');
+Route::post('putsession', 'LoginUserController@put')->name('put.session');
+Route::post('logout/user', 'LoginUserController@logoutuser')->name('logout.user');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:administrator']], function() {
+Route::get('/bilangan/prima', function () {
 
-    Route::get('/', function () {
-
-        return view('admin.index');
-    });
-
-    Route::resource('barang', 'BarangController');
-    Route::resource('bahan', 'BahanController');
-    Route::resource('returpenjualan', 'ReturPenjualanController');
-    Route::post('/prosesret', 'ProsesReturController@proses')->name('prosesret');
-    Route::get('/spb', 'ReturPenjualanController@spb')->name('spb');
-    Route::resource('spbproduksi', 'SpbProduksiController');
+    return view('bilangans.prima');
 });
 
-Route::group(['prefix' => 'ppic', 'middleware' => ['auth', 'role:ppic']], function() {
+Route::get('/bilangan/genap', function () {
 
-    Route::get('/', function () {
-        return view('ppic.indux');
-    });
-    Route::put('/prosesret/process/{id}', 'ProsesReturController@prosesacc')->name('prosesretacc');
-    Route::put('/prosesret/decline/{id}', 'ProsesReturController@prosesdec')->name('prosesretdec');
-    Route::put('/prosesret/data/{id}', 'ProsesReturController@data')->name('data');
-    Route::get('/spk', 'ProsesReturController@spk')->name('spk');
-    Route::resource('prosesretur', 'ProsesReturController');
-    Route::resource('spkproduksi', 'SpkProduksiController');
+    return view('bilangans.genap');
 });
 
-Route::group(['prefix' => 'produksi', 'middleware' => ['auth', 'role:produksi']], function() {
+Route::get('/bilangan/ganjil', function () {
 
-    Route::get('/', function () {
-        return view('produksis.index');
-    });
-    Route::get('/spbspk', 'SpbSpkController@all')->name('spbspk');
+    return view('bilangans.ganjil');
+});
+
+Route::get('/bilangan/kelipatanlima', function () {
+
+    return view('bilangans.kelipatanlima');
+});
+
+Route::get('/pola/segitiga', function () {
+
+    return view('pola.segitiga');
 });
 
 
-Route::get('/', function () {
-
-    return view('welcome');
-});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 
 
